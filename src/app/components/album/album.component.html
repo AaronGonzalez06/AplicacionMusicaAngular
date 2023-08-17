@@ -1,0 +1,82 @@
+<main>
+    <section>
+        <div>
+            <h2>Albums</h2>
+            <form class="d-flex">
+                <input id="album" name="album" [(ngModel)]="album" class="form-control me-2" type="search" placeholder="Album" aria-label="Search">
+                <input id="artista" name="artista" [(ngModel)]="artista" class="form-control me-2" type="search" placeholder="Artista" aria-label="Search">
+                <button (click)="infoAlbum()" class="btn btn-outline-success btn-mod" type="submit">Search</button>
+            </form>
+            <div>
+                <h3>Datos Album</h3>
+                <ng-container *ngIf="init">
+                    <div class="alert alert-dark" role="alert">
+                        Encuentra toda la información de tu artista
+                      </div>
+                </ng-container>
+                <ng-container *ngIf="sinResultados;else resultado">
+                    <div class="alert alert-success" role="alert">No se ha encontrado ningún artista.</div>
+                 </ng-container>
+                 <ng-template #resultado>
+                    <h4>{{informacion.name}}</h4>
+                    <div>
+                        <img src="{{informacion.image[3]['#text']}}"/>
+                    </div>
+                    <p [innerHTML]="informacion.wiki.content"></p>
+                    <p [innerHTML]="informacion.wiki.summary"></p>
+                 </ng-template>
+            </div>
+            <ng-container *ngIf="!sinResultados">
+            <ul class="list-group list-group-flush">
+                <ng-container *ngFor="let cancion of informacion.tracks.track; let i = index">
+                <li class="list-group-item d-flex list-mod">
+                     <span>#{{i +1}} {{cancion.name}} 
+                        <img  class="album" src="{{informacion.image[1]['#text']}}">                        
+                    </span>
+                    <ng-container *ngIf="totalFav == 0;else fav">
+                        <img (click)="add(cancion.name,cancion.artist.name)" class="icono-music" width="30" height="30" src="https://img.icons8.com/ultraviolet/30/music.png" alt="music"/>
+                   </ng-container>
+                   <ng-template #fav>
+                      <ng-container *ngIf="esFav(cancion.name)">        
+                        <img (click)="delete(cancion.name,cancion.artist.name)" class="icono-music" width="30" height="30" src="https://img.icons8.com/office/30/music.png" alt="music"/>
+                      </ng-container>
+                    
+                      <ng-container *ngIf="noFav(cancion.name)">        
+                        <img (click)="add(cancion.name,cancion.artist.name)" class="icono-music" width="30" height="30" src="https://img.icons8.com/ultraviolet/30/music.png" alt="music"/>
+                      </ng-container>
+                   </ng-template>
+                </li>
+            </ng-container>
+            </ul>
+            </ng-container>
+        </div>
+    </section>
+    <aside>
+        <h2>Canciones top Album</h2>
+        <div>
+            <ng-container *ngIf="!sinResultados">
+            <ul class="list-group list-group-flush">
+                <ng-container *ngFor="let album of cancionesTop; let i = index">
+                <li class="list-group-item d-flex list-mod">
+                    <span>#{{i +1}} {{album.name}} 
+                       <img class="album" src="{{informacion.image[1]['#text']}}">                        
+                   </span>
+                   <ng-container *ngIf="totalFav == 0;else fav">
+                        <img (click)="add(album.name,informacion.artist)" class="icono-music" width="30" height="30" src="https://img.icons8.com/ultraviolet/30/music.png" alt="music"/>
+                   </ng-container>
+                   <ng-template #fav>
+                      <ng-container *ngIf="esFav(album.name)">        
+                        <img (click)="delete(album.name,informacion.artist)" class="icono-music" width="30" height="30" src="https://img.icons8.com/office/30/music.png" alt="music"/>
+                      </ng-container>
+                    
+                      <ng-container *ngIf="noFav(album.name)">        
+                        <img (click)="add(album.name,informacion.artist)" class="icono-music" width="30" height="30" src="https://img.icons8.com/ultraviolet/30/music.png" alt="music"/>
+                      </ng-container>
+                   </ng-template>
+               </li>
+                </ng-container>
+            </ul>
+            </ng-container>
+        </div>        
+    </aside>
+</main>

@@ -1,0 +1,38 @@
+<main>
+    <section>
+        <div>
+            <h2>songs</h2>
+            <ng-container *ngIf="totalSong == 0;else fav">
+                <div class="alert alert-success" role="alert">No hay nada añadido</div>
+             </ng-container>
+             <ng-template #fav>
+                <ul class="list-group list-group-flush">
+                    <ng-container *ngFor="let dato of songs; let i = index">
+                    <li *ngIf="dato.tipo == 'song'" class="list-group-item d-flex list-mod">
+                        <span>#{{i +1}} {{dato.name}} - artista: {{dato.artist}}</span>
+                     <img (click)="delete(dato.name,dato.tipo,dato.artist)" class="icono-music" width="30" height="30" src="https://img.icons8.com/office/30/music.png" alt="music"/>
+                    </li>
+                    </ng-container>
+                </ul>
+             </ng-template>                        
+        </div>
+    </section>
+    <aside>
+        <div>
+        <h2>Albums</h2>
+        <ng-container *ngIf="totalAlbums == 0;else favAlbum">
+            <div class="alert alert-success" role="alert">No hay nada añadido</div>
+         </ng-container>
+         <ng-template #favAlbum>
+            <ul class="list-group list-group-flush">
+                <ng-container *ngFor="let dato of albums; let i = index">
+                <li *ngIf="dato.tipo == 'album'" (click)="delete(dato.name,dato.tipo,dato.artist)" class="list-group-item d-flex list-mod list-mod-album">
+                     <span>#{{i +1}} {{dato.name}} - artista: {{dato.artist}} <img src="{{dato.url}}" /></span>
+                     <img (click)="delete(dato.name,dato.tipo,dato.artist)" class="icono-music" width="30" height="30" src="https://img.icons8.com/office/30/music.png" alt="music"/>
+                </li>
+                </ng-container>
+            </ul>
+         </ng-template>
+        </div>        
+    </aside>
+</main>

@@ -1,0 +1,24 @@
+<main>
+    <section>
+        <div>
+        <h2>Iniciar sesión</h2>        
+            <form class="d-flex mod-login">
+                <input id="email" name="email" [(ngModel)]="email"class="form-control me-2 imput-register" type="email" placeholder="Email" aria-label="Search">
+                <input id="passwd" name="passwd" [(ngModel)]="passwd"class="form-control me-2 imput-register" type="password" placeholder="Contraseña" aria-label="Search">
+                <button (click)="login()" class="btn-mod btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+    <aside>
+        <div>
+        <h2>Crear cuenta</h2>
+        <form class="d-flex mod-register">
+            <input id="emailRegister" name="emailRegister" [(ngModel)]="emailRegister"class="form-control me-2 imput-register" type="email" placeholder="Email" aria-label="Search">
+            <input id="passwdRegister" name="passwdRegister" [(ngModel)]="passwdRegister"class="form-control me-2 imput-register" type="password" placeholder="Contraseña" aria-label="Search">
+            <input id="passwdVerifiRegister" name="passwdVerifiRegister" [(ngModel)]="passwdVerifiRegister"class="form-control me-2 imput-register" type="password" placeholder="Repetir contraseña" aria-label="Search">
+
+            <button (click)="register()" class="btn-mod btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+    </aside>
+</main>

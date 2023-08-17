@@ -1,0 +1,85 @@
+<main>
+    <section>
+        <div>
+            <h2>Datos de tu artista favorito</h2>
+            <form class="d-flex">
+                <input id="artista" name="artista" [(ngModel)]="artista" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button (click)="infoArtista()" class="btn btn-outline-success btn-mod" type="submit">Search</button>
+            </form>
+            <div>
+                <h3>Datos artista</h3>
+                <ng-container *ngIf="init">
+                    <div class="alert alert-dark" role="alert">
+                        Encuentra toda la información de tu artista
+                      </div>
+                </ng-container>
+                <ng-container *ngIf="sinResultados;else resultado">
+                    <div class="alert alert-success" role="alert">No se ha encontrado ningún artista.</div>
+                 </ng-container>
+                 <ng-template #resultado>
+                    <div>
+                        <img src="{{albums[0].image[3]['#text']}}"/>
+                    </div>
+                    <h4>{{informacionArtista.name}}</h4>
+                    <p [innerHTML]="informacionArtista.bio.content"></p>
+                    <p [innerHTML]="informacionArtista.bio.summary"></p>
+                    <p class="estilos">
+                        <ng-container *ngFor="let categoria of informacionArtista.tags.tag;let lastIndex = last">
+                        <span *ngIf="!lastIndex">{{categoria.name}} -- </span>
+                        <span *ngIf="!lastIndex">{{categoria.name}}</span>
+                        </ng-container>
+                    </p>
+                    <p class="sugerencias">
+                        <ng-container *ngFor="let artista of informacionArtista.similar.artist;let lastIndex = last">
+                            <span *ngIf="!lastIndex" (click)="infoArtista(artista.name)">{{artista.name}} -- </span>
+                            <span *ngIf="lastIndex" (click)="infoArtista(artista.name)">{{artista.name}} </span>
+                        </ng-container> 
+                    </p>
+                 </ng-template>                 
+            </div>
+            <ul class="list-group list-group-flush">
+                <ng-container *ngFor="let music of musicArtist; let i = index">
+                <li class="list-group-item d-flex list-mod">
+                     #{{i +1}} {{music.name}}
+                     <ng-container *ngIf="totalFav == 0;else fav">
+                        <img (click)="add(music.name,informacionArtista.name)" width="30" class="icono-music" height="30" src="https://img.icons8.com/ultraviolet/30/music.png" alt="music"/>
+                     </ng-container>
+                     <ng-template #fav>
+                          <ng-container *ngIf="esFav(music.name)">        
+                            <img (click)="delete(music.name,informacionArtista.name)" class="icono-music" width="30" height="30" src="https://img.icons8.com/office/30/music.png" alt="music"/>
+                          </ng-container>
+                        
+                          <ng-container *ngIf="noFav(music.name)">        
+                            <img (click)="add(music.name,informacionArtista.name)" class="icono-music" width="30" height="30" src="https://img.icons8.com/ultraviolet/30/music.png" alt="music"/>
+                          </ng-container>
+                     </ng-template>
+                </li>
+                </ng-container>
+            </ul>
+        </div>
+    </section>
+    <aside>
+        <h2>Albunes del artista</h2>
+        <div>
+            <ul class="list-group list-group-flush">
+                <ng-container *ngFor="let album of albums; let i = index">
+                <li class="list-group-item d-flex list-mod list-mod-album">
+                     <span>#{{i +1}} {{album.name}} <img *ngIf="album.image[1]['#text'] !== ''" class="album" src="{{album.image[1]['#text']}}"></span>
+                     <ng-container *ngIf="totalFav == 0;else fav">
+                        <img (click)="addAlbum(album.name,informacionArtista.name,album.image[1]['#text'])" class="icono-music" width="30" height="30" src="https://img.icons8.com/ultraviolet/30/music.png" alt="music"/>
+                     </ng-container>
+                     <ng-template #fav>
+                          <ng-container *ngIf="esFav(album.name)">        
+                            <img (click)="deleteAlbum(album.name,informacionArtista.name)" class="icono-music" width="30" height="30" src="https://img.icons8.com/office/30/music.png" alt="music"/>
+                          </ng-container>
+                        
+                          <ng-container *ngIf="noFav(album.name)">        
+                            <img (click)="addAlbum(album.name,informacionArtista.name,album.image[1]['#text'])" class="icono-music" width="30" height="30" src="https://img.icons8.com/ultraviolet/30/music.png" alt="music"/>
+                          </ng-container>
+                     </ng-template>                     
+                </li>
+                </ng-container>
+            </ul>
+        </div>
+    </aside>
+</main>

@@ -1,0 +1,42 @@
+<main>
+    <section>
+      <div class="d-flex div-banderas mod-tittle-music">
+        <span class="iconos-banderas">
+        <img (click)="topMusic('united states')" width="30" height="30" class="banderas" src="https://img.icons8.com/color/30/usa-circular.png" alt="usa-circular"/>
+        <img (click)="topMusic('spain')" width="30" height="30" class="banderas" src="https://img.icons8.com/color/30/spain-circular.png" alt="spain-circular"/>
+        <img (click)="topMusic('france')" width="30" height="30" class="banderas" src="https://img.icons8.com/fluency/30/france-circular.png" alt="france-circular"/>
+        <img (click)="topMusic('united kingdom')" width="30" height="30" class="banderas" src="https://img.icons8.com/fluency/30/great-britain-circular.png" alt="great-britain-circular"/>
+        </span>
+        <h2>Canciones top de la semana</h2>
+      </div>     
+      <ul class="list-group list-group-flush list-group-item-primary">
+        <ng-container *ngFor="let dato of musica; let i = index">
+        <li class="list-group-item d-flex list-mod">
+           #{{i +1}} {{dato.name}} - artista: {{dato.artist.name}}
+           <ng-container *ngIf="totalFav == 0;else fav">
+              <img (click)="add(dato.name,dato.artist.name)" class="icono-music" width="30" height="30" src="https://img.icons8.com/ultraviolet/30/music.png" alt="music"/>
+           </ng-container>
+           <ng-template #fav>
+                <ng-container *ngIf="esFav(dato.name)">        
+                  <img (click)="delete(dato.name, dato.artist.name)" class="icono-music" width="30" height="30" src="https://img.icons8.com/office/30/music.png" alt="music"/>
+                </ng-container>
+              
+                <ng-container *ngIf="noFav(dato.name)">        
+                  <img (click)="add(dato.name,dato.artist.name)" class="icono-music" width="30" height="30" src="https://img.icons8.com/ultraviolet/30/music.png" alt="music"/>
+                </ng-container>
+           </ng-template>           
+        </li>
+      </ng-container>
+      </ul> 
+      </section>
+      <aside>
+        <div>
+          <h2>Artistas top</h2>
+          <ul class="list-group list-group-flush list-group-item-primary">
+            <ng-container  *ngFor="let artista of infoMusica; let i = index">
+            <li class="list-group-item"> #{{i +1}} {{artista.name}} - Reproducciones: {{artista.playcount | number}}</li>
+          </ng-container>
+          </ul>
+        </div>
+      </aside>
+</main>
